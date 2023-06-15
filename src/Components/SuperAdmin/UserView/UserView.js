@@ -27,7 +27,7 @@ const UsersTable = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/users")
+      .get("http://localhost:5000/users/")
       .then((response) => {
         setUsers(response.data);
         setLoading(false);
@@ -127,7 +127,7 @@ const UsersTable = () => {
                     <TableCell>
                       <IconButton
                         component={RouterLink}
-                        to="somewhere"
+                        to={`/user-nbee101-admin-view-user-form/${user._id}`}
                         onClick={() => handleActionClick(user._id)}
                       >
                         A

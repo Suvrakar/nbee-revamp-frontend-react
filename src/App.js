@@ -15,6 +15,7 @@ import CourseSection from "./Components/MainMenu/CourseSection/CourseSection";
 import EditSectionForm from "./Components/MainMenu/EditProfile/EditProfile";
 import EnrolledCourses from "./Components/MainMenu/EnrolledCourses/EnrolledCourses";
 import UsersTable from "./Components/SuperAdmin/UserView/UserView";
+import UserForm from "./Components/SuperAdmin/UserView/UserEditForm";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -54,8 +55,27 @@ const App = () => {
             <Route exact path="/profile" element={<UserProfile />} />
             <Route exact path="/course" element={<CourseSection />} />
             <Route exact path="/edit-profile" element={<EditSectionForm />} />
-            <Route exact path="/enrolled-courses" element={<EnrolledCourses />} />
-            <Route exact path="/user-nbee101-admin-view" element={<UsersTable />} />
+            <Route
+              exact
+              path="/enrolled-courses"
+              element={<EnrolledCourses />}
+            />
+            <Route
+              exact
+              path="/user-nbee101-admin-view"
+              element={<UsersTable />}
+            />
+            {/* <Route
+              exact
+              path="/user-nbee101-admin-view-user-form"
+              element={<UserForm />}
+            /> */}
+            {/* user-nbee101-admin-view-user-form/6294ed66b36ebc4f37fbeea3 */}
+            <Route
+              exact
+              path="/user-nbee101-admin-view-user-form/:id"
+              element={<UserForm />}
+            />
           </Route>
         </Routes>
         <Footer />
