@@ -14,9 +14,12 @@ import {
   Tooltip,
   Skeleton,
   Button,
+  Typography,
 } from "@mui/material";
 import axios from "axios";
 import { Link as RouterLink } from "react-router-dom";
+import { Container } from "@mui/material";
+import SearchBarNbee101Users from "./SearchBarNbee101Users";
 
 const UsersTable = () => {
   const [users, setUsers] = useState([]);
@@ -27,7 +30,7 @@ const UsersTable = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/users/")
+      .get(`${process.env.REACT_APP_BASE_URL}/users/`)
       .then((response) => {
         setUsers(response.data);
         setLoading(false);
@@ -72,9 +75,26 @@ const UsersTable = () => {
     setPage(0);
   };
 
+  const handleSearch = (query) => {
+    axios
+      .get(`${process.env.REACT_APP_BASE_URL}/users/search`, {
+        params: { query },
+      })
+      .then((response) => {
+        setUsers(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   return (
-    <div>
-      <TableContainer component={Paper}>
+    <Container sx={{ marginTop: 5, marginBottom: 5 }}>
+      <Typography sx={{ marginTop: 5, marginBottom: 5 }} variant="h6">
+        Nbee101 User List
+      </Typography>
+      <SearchBarNbee101Users onSearch={handleSearch} sx={{ marginBottom: 5 }} />
+      <TableContainer sx={{ marginBottom: 5 }} component={Paper}>
         <Table>
           <TableHead>
             <TableRow>
@@ -104,6 +124,38 @@ const UsersTable = () => {
               <TableRow>
                 <TableCell colSpan={6}>
                   <Skeleton variant="rectangular" height={50} />
+                </TableCell>
+              </TableRow>
+            ) : users.length === 0 ? (
+              // Display "No users found" message if there are no search results
+              <TableRow>
+                <TableCell colSpan={6} align="center">
+                  No users found
+                </TableCell>
+              </TableRow>
+            ) : users.length === 1 ? (
+              // Handle single user scenario
+              <TableRow key={users[0]._id}>
+                <TableCell>
+                  <Checkbox
+                    checked={selectedUsers.includes(users[0]._id)}
+                    onChange={(event) =>
+                      handleCheckboxClick(event, users[0]._id)
+                    }
+                  />
+                </TableCell>
+                <TableCell>{users[0].name}</TableCell>
+                <TableCell>{users[0].phone}</TableCell>
+                <TableCell>{users[0].email}</TableCell>
+                <TableCell>{users[0].paymentStatus}</TableCell>
+                <TableCell>
+                  <IconButton
+                    component={RouterLink}
+                    to={`/user-nbee101-admin-view-user-form/${users[0]._id}`}
+                    onClick={() => handleActionClick(users[0]._id)}
+                  >
+                    A
+                  </IconButton>
                 </TableCell>
               </TableRow>
             ) : (
@@ -156,7 +208,7 @@ const UsersTable = () => {
       >
         Send Email
       </Button>
-    </div>
+    </Container>
   );
 };
 

@@ -62,7 +62,7 @@ const UserProfile = () => {
                 variant="outlined"
                 color="primary"
               >
-                Additional Options for Super Admin
+                Admin Dashboard
               </Button>
             )}
           </Grid>

@@ -5,8 +5,11 @@ import {
   FormControlLabel,
   Button,
   Grid,
+  Snackbar,
 } from "@mui/material";
+import MuiAlert from "@mui/material/Alert";
 import axios from "axios";
+import { Container } from "@mui/material";
 import { useParams } from "react-router-dom";
 
 const UserForm = () => {
@@ -17,13 +20,15 @@ const UserForm = () => {
     name: "",
     email: "",
     phone: "",
-    paymentNbee101Status: false,
+    paymentStatus: "false", // Set as boolean value
   });
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [showError, setShowError] = useState(false);
 
   useEffect(() => {
     if (id) {
       axios
-        .get(`http://localhost:5000/user/${id}`)
+        .get(`${process.env.REACT_APP_BASE_URL}/user/${id}`)
         .then((response) => {
           setUser(response.data);
           setFormData(response.data);
@@ -40,23 +45,44 @@ const UserForm = () => {
       ...prevFormData,
       [name]: value,
     }));
-
   };
+
   const handleSwitchChange = (event) => {
     const { name, checked } = event.target;
+    console.log(JSON.parse(checked));
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [name]: checked,
+      [name]: JSON.parse(checked),
     }));
+  };
+
+  const handleCloseSuccess = () => {
+    setShowSuccess(false);
+  };
+
+  const handleCloseError = () => {
+    setShowError(false);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Handle form submission logic here
-    console.log(formData);
+
+    if (id) {
+      axios
+        .put(`${process.env.REACT_APP_BASE_URL}/user/${id}`, formData)
+        .then((response) => {
+          console.log("User updated:", response.data);
+          setShowSuccess(true);
+        })
+        .catch((error) => {
+          console.error("Error updating user:", error);
+          setShowError(true);
+        });
+    }
   };
 
   return (
+    <Container sx={{ marginTop: 5, marginBottom: 5 }}>
     <form onSubmit={handleSubmit}>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
@@ -95,7 +121,7 @@ const UserForm = () => {
             control={
               <Switch
                 name="paymentStatus"
-                checked={formData.paymentStatus}
+                checked={JSON.parse(formData.paymentStatus)}
                 onChange={handleSwitchChange}
                 color="primary"
               />
@@ -109,7 +135,38 @@ const UserForm = () => {
           </Button>
         </Grid>
       </Grid>
+
+      <Snackbar
+        open={showSuccess}
+        autoHideDuration={4000}
+        onClose={handleCloseSuccess}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+      >
+        <MuiAlert
+          onClose={handleCloseSuccess}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          {id ? "User updated successfully." : "User created successfully."}
+        </MuiAlert>
+      </Snackbar>
+
+      <Snackbar
+        open={showError}
+        autoHideDuration={4000}
+        onClose={handleCloseError}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+      >
+        <MuiAlert
+          onClose={handleCloseError}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          {id ? "Error updating user." : "Error creating user."}
+        </MuiAlert>
+      </Snackbar>
     </form>
+    </Container>
   );
 };
 

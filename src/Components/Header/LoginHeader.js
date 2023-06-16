@@ -16,6 +16,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { useNavigate } from "react-router-dom";
+import Button from "@mui/material/Button";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -66,15 +67,27 @@ export default function LoginHeader() {
   };
 
   const handleMyAccount = () => {
+    handleMenuClose();
+    handleMobileMenuClose();
     navigate("/course");
   };
   const handleProfile = () => {
+    handleMenuClose();
+
+    handleMobileMenuClose();
+
     navigate("/profile");
   };
   const handleEditProfile = () => {
+    handleMenuClose();
+
+    handleMobileMenuClose();
+
     navigate("/edit-profile");
   };
   const handleEnrolled = () => {
+    handleMenuClose();
+    handleMobileMenuClose();
     navigate("/enrolled-courses");
   };
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -85,6 +98,11 @@ export default function LoginHeader() {
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
+  };
+
+  const handleProfileMenuClose = () => {
+    handleMenuClose();
+    handleMobileMenuClose();
   };
 
   const handleMobileMenuClose = () => {
@@ -120,7 +138,11 @@ export default function LoginHeader() {
       <MenuItem onClick={handleProfile}>Profile</MenuItem>
       <MenuItem onClick={handleEditProfile}>My account</MenuItem>
       <MenuItem onClick={handleEnrolled}>Enrolled Course(s)</MenuItem>
-      <MenuItem onClick={handleLogout}>Logout</MenuItem>
+      <MenuItem>
+        <Button onClick={handleLogout} variant="contained" color="error">
+          Logout
+        </Button>
+      </MenuItem>
     </Menu>
   );
 
@@ -142,11 +164,7 @@ export default function LoginHeader() {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 4 new mails"
-          color="inherit"
-        >
+        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
           <Badge badgeContent={4} color="error">
             <MailIcon />
           </Badge>
@@ -221,12 +239,12 @@ export default function LoginHeader() {
               sx={{ p: 1 }} // Add padding to the icon
             >
               <Badge badgeContent={17} color="error">
-                <NotificationsIcon fontSize="large" /> {/* Increase icon size */}
+                <NotificationsIcon fontSize="large" />{" "}
+                {/* Increase icon size */}
               </Badge>
             </IconButton>
             <IconButton
               size="large"
-              edge="end"
               aria-label="account of current user"
               aria-controls={menuId}
               aria-haspopup="true"
