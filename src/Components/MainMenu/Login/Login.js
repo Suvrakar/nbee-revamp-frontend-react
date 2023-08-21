@@ -31,7 +31,7 @@ const LoginForm = ({setIsLoggedIn}) => {
     onSubmit: (values) => {
       // Make the API call here
       axios
-        .post(REACT_APP_BASE_URL, values)
+        .post(`${process.env.REACT_APP_BASE_URL}`, formData)
         .then((response) => {
           const accessToken = response.data.token;
           localStorage.setItem('accessToken', accessToken);
