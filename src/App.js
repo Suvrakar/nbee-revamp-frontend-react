@@ -14,8 +14,11 @@ import LoginHeader from "./Components/Header/LoginHeader";
 import CourseSection from "./Components/MainMenu/CourseSection/CourseSection";
 import EditSectionForm from "./Components/MainMenu/EditProfile/EditProfile";
 import EnrolledCourses from "./Components/MainMenu/EnrolledCourses/EnrolledCourses";
-import UsersTable from "./Components/SuperAdmin/UserView/UserView";
-import UserForm from "./Components/SuperAdmin/UserView/UserEditForm";
+import UsersTable101 from "./Components/SuperAdmin/UserView/nbee101/UserView";
+import UserForm from "./Components/SuperAdmin/UserView/nbee101/UserEditForm";
+import AdminMainView from "./Components/SuperAdmin/UserView/AdminMainView";
+import UsersTable102 from "./Components/SuperAdmin/UserView/nbee102/UserView102";
+import UserForm102 from "./Components/SuperAdmin/UserView/nbee102/UserEditForm102";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -63,14 +66,23 @@ const App = () => {
             <Route
               exact
               path="/user-nbee101-admin-view"
-              element={<UsersTable />}
+              element={<UsersTable101 />}
             />
-            {/* <Route
+            <Route
               exact
-              path="/user-nbee101-admin-view-user-form"
-              element={<UserForm />}
-            /> */}
-            {/* user-nbee101-admin-view-user-form/6294ed66b36ebc4f37fbeea3 */}
+              path="/user-nbee102-admin-view"
+              element={<UsersTable102 />}
+            />
+            <Route
+              exact
+              path="/user-main-admin-view"
+              element={<AdminMainView />}
+            />
+            <Route
+              exact
+              path="/user-nbee102-admin-view-user-form/:id"
+              element={<UserForm102 />}
+            />
             <Route
               exact
               path="/user-nbee101-admin-view-user-form/:id"

@@ -58,7 +58,7 @@ const UserProfile = () => {
               <Button
                 style={{ marginTop: 20 }}
                 component={Link}
-                to="/user-nbee101-admin-view"
+                to="/user-main-admin-view"
                 variant="outlined"
                 color="primary"
               >

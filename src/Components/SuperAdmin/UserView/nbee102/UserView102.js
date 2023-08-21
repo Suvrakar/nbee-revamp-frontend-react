@@ -19,9 +19,9 @@ import {
 import axios from "axios";
 import { Link as RouterLink } from "react-router-dom";
 import { Container } from "@mui/material";
-import SearchBarNbee101Users from "./SearchBarNbee101Users";
+import SearchBarNbee101Users from "../nbee101/SearchBarNbee101Users";
 
-const UsersTable = () => {
+const UsersTable102 = () => {
   const [users, setUsers] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -30,7 +30,7 @@ const UsersTable = () => {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_BASE_URL}/users/`)
+      .get(`${process.env.REACT_APP_BASE_URL}/usersnbee102/`)
       .then((response) => {
         setUsers(response.data);
         setLoading(false);
@@ -91,7 +91,7 @@ const UsersTable = () => {
   return (
     <Container sx={{ marginTop: 5, marginBottom: 5 }}>
       <Typography sx={{ marginTop: 5, marginBottom: 5 }} variant="h6">
-        Nbee101 User List
+        Nbee102 User List
       </Typography>
       <SearchBarNbee101Users onSearch={handleSearch} sx={{ marginBottom: 5 }} />
       <TableContainer sx={{ marginBottom: 5 }} component={Paper}>
@@ -110,11 +110,12 @@ const UsersTable = () => {
                   }
                   onChange={handleSelectAllClick}
                 />
+                {console.log(users, "nfdfnodfsnofnodf")}
               </TableCell>
               <TableCell>Name</TableCell>
               <TableCell>Phone</TableCell>
               <TableCell>Email</TableCell>
-              <TableCell>Nbee101 Payment Status</TableCell>
+              <TableCell>Nbee102 Payment Status</TableCell>
               <TableCell>Action</TableCell>
             </TableRow>
           </TableHead>
@@ -144,14 +145,14 @@ const UsersTable = () => {
                     }
                   />
                 </TableCell>
-                <TableCell>{users[0].name}</TableCell>
-                <TableCell>{users[0].phone}</TableCell>
-                <TableCell>{users[0].email}</TableCell>
-                <TableCell>{users[0].paymentStatus}</TableCell>
+                {/* <TableCell>{users[0].user_name}</TableCell> */}
+                {/* <TableCell>{users[0].user_name}</TableCell> */}
+                {/* <TableCell>{users[0].user_email}</TableCell>
+                <TableCell>{users[0].nbee102_paymentStatus}</TableCell> */}
                 <TableCell>
                   <IconButton
                     component={RouterLink}
-                    to={`/user-nbee101-admin-view-user-form/${users[0]._id}`}
+                    to={`/user-nbee102-admin-view-user-form/${users[0]._id}`}
                     onClick={() => handleActionClick(users[0]._id)}
                   >
                     A
@@ -172,14 +173,14 @@ const UsersTable = () => {
                         }
                       />
                     </TableCell>
-                    <TableCell>{user.name}</TableCell>
-                    <TableCell>{user.phone}</TableCell>
-                    <TableCell>{user.email}</TableCell>
-                    <TableCell>{user.paymentStatus}</TableCell>
+                    <TableCell>{user.user_name}</TableCell>
+                    <TableCell>{user.user_name}</TableCell>
+                    <TableCell>{user.user_email}</TableCell>
+                    <TableCell>{user.nbee102_paymentStatus}</TableCell>
                     <TableCell>
                       <IconButton
                         component={RouterLink}
-                        to={`/user-nbee101-admin-view-user-form/${user._id}`}
+                        to={`/user-nbee102-admin-view-user-form/${user._id}`}
                         onClick={() => handleActionClick(user._id)}
                       >
                         A
@@ -212,4 +213,4 @@ const UsersTable = () => {
   );
 };
 
-export default UsersTable;
+export default UsersTable102;
