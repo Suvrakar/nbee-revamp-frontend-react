@@ -24,7 +24,7 @@ const UserProfile = () => {
 
   const fetchUserProfile = () => {
     axios
-      .get("http://localhost:5000/profile", {
+      .get(`${process.env.REACT_APP_BASE_URL + "/profile"}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
